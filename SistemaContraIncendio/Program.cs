@@ -60,6 +60,7 @@ namespace sistemacontraincendios
                         OperacionesAlarma.RegistrarTemperaturaManual();
                         break;
                     case 2:
+                        OperacionesAlarma.GenerarTemperaturaAleatoria();
                         break;
                     case 3:
                         break;
