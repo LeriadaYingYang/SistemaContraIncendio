@@ -129,16 +129,12 @@ namespace BibliotecaContraIncendios
                 return;
             }
 
-            Console.WriteLine("=== HISTORIAL ACTUAL ===");
+            Console.WriteLine("ESTE ES EL HISTORIAL ACTUAL DE LA BASE DE TEXTO:");
             Console.WriteLine();
 
             for (int i = 0; i < cantidad; i++)
             {
-                Console.WriteLine(
-                    (i + 1) + ". " +
-                    historialtemperatura[i] + "°C" +
-                    "  -  " + historialFechas[i]
-                );
+                Console.WriteLine((i + 1) + ". " +historialtemperatura[i] + "°C" +"  -  " + historialFechas[i]);
             }
 
             Console.WriteLine();
@@ -187,6 +183,178 @@ namespace BibliotecaContraIncendios
             Pausa();
         }
 
+        public static void EliminarTemperatura()
+        {
+            Console.Clear();
+
+            if (cantidad == 0)
+            {
+                Console.WriteLine("No hay datos en el historial.");
+                Pausa();
+                return;
+            }
+
+            Console.WriteLine("ESTE ES EL HISTORIAL ACTUAL DE LA BASE DE TEXTO:");
+            Console.WriteLine();
+
+            for (int i = 0; i < cantidad; i++)
+            {
+                Console.WriteLine((i + 1) + ". " + historialtemperatura[i] + "°C" + "  -  " + historialFechas[i]);
+            }
+
+            Console.WriteLine();
+            Console.Write("Ingrese la posición que desea eliminar (1 a " + cantidad + "): ");
+
+            string textoPosicion = Console.ReadLine();
+            int posicion;
+            int.TryParse(textoPosicion, out posicion);
+
+            if (posicion <= 0 || posicion > cantidad)
+            {
+                Console.WriteLine("Posición inválida.");
+                Pausa();
+                return;
+            }
+
+            int indice = posicion - 1;
+
+            for (int i = indice; i < cantidad - 1; i++)
+            {
+                historialtemperatura[i] = historialtemperatura[i + 1];
+                historialFechas[i] = historialFechas[i + 1];
+            }
+
+            cantidad--;
+
+            GestionArchivoTemperaturas.GuardarHistorial(historialtemperatura, historialFechas, cantidad);
+
+            Console.WriteLine();
+            Console.WriteLine("Temperatura eliminada correctamente.");
+
+            Pausa();
+        }
+
+        public static void MostrarHistorial()
+        {
+            Console.Clear();
+
+            if (cantidad == 0)
+            {
+                Console.WriteLine("No hay temperaturas registradas.");
+                Pausa();
+                return;
+            }
+
+            Console.WriteLine("ESTE ES EL HISTORIAL DE TEMPERATURAS DE LA BASE DE TEXTO");
+            Console.WriteLine();
+            Console.WriteLine("1. Ver por fecha (más reciente primero)");
+            Console.WriteLine("2. Ordenar de menor a mayor (por temperatura)");
+            Console.WriteLine("3. Ordenar de mayor a menor (por temperatura)");
+            Console.Write("Seleccione una opción: ");
+
+            string textoOpcion = Console.ReadLine();
+            int opcionOrden;
+            int.TryParse(textoOpcion, out opcionOrden);
+
+            switch (opcionOrden)
+            {
+                case 2:
+                    {
+                        int auxTemperatura;
+                        string auxFecha;
+                        int limite = cantidad;
+
+                        for (int i = 0; i < limite - 1; i++)
+                        {
+                            for (int j = 0; j < limite - 1 - i; j++)
+                            {
+                                if (historialtemperatura[j] > historialtemperatura[j + 1])
+                                {
+                                    auxTemperatura = historialtemperatura[j];
+                                    historialtemperatura[j] = historialtemperatura[j + 1];
+                                    historialtemperatura[j + 1] = auxTemperatura;
+
+                                    auxFecha = historialFechas[j];
+                                    historialFechas[j] = historialFechas[j + 1];
+                                    historialFechas[j + 1] = auxFecha;
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                case 3:
+                    {
+                        int auxTemperatura;
+                        string auxFecha;
+                        int limite = cantidad;
+
+                        for (int i = 0; i < limite - 1; i++)
+                        {
+                            for (int j = 0; j < limite - 1 - i; j++)
+                            {
+                                if (historialtemperatura[j] < historialtemperatura[j + 1])
+                                {
+                                    auxTemperatura = historialtemperatura[j];
+                                    historialtemperatura[j] = historialtemperatura[j + 1];
+                                    historialtemperatura[j + 1] = auxTemperatura;
+
+                                    auxFecha = historialFechas[j];
+                                    historialFechas[j] = historialFechas[j + 1];
+                                    historialFechas[j + 1] = auxFecha;
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                default:
+                    {
+                        int limite = cantidad;
+                        int auxTemperatura;
+                        string auxFecha;
+
+                        for (int i = 0; i < limite - 1; i++)
+                        {
+                            for (int j = 0; j < limite - 1 - i; j++)
+                            {
+                                DateTime fecha1;
+                                DateTime fecha2;
+
+                                DateTime.TryParse(historialFechas[j], out fecha1);
+                                DateTime.TryParse(historialFechas[j + 1], out fecha2);
+
+                                if (fecha1 < fecha2)
+                                {
+                                    auxTemperatura = historialtemperatura[j];
+                                    historialtemperatura[j] = historialtemperatura[j + 1];
+                                    historialtemperatura[j + 1] = auxTemperatura;
+
+                                    auxFecha = historialFechas[j];
+                                    historialFechas[j] = historialFechas[j + 1];
+                                    historialFechas[j + 1] = auxFecha;
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Listado de temperaturas:");
+            Console.WriteLine();
+
+            for (int i = 0; i < cantidad; i++)
+            {
+                int temperatura = historialtemperatura[i];
+                string estado = EvaluarEstado(temperatura);
+                string fecha = historialFechas[i];
+
+                Console.WriteLine((i + 1) + ". " +temperatura + "°C - " +estado + " - " +fecha);
+            }
+
+            Pausa();
+        }
 
 
 
