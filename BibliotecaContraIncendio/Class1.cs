@@ -48,6 +48,49 @@ namespace BibliotecaContraIncendios
             return "NORMAL";
         }
 
+        public static void RegistrarTemperaturaManual()
+        {
+            Console.Clear();
+            Console.Write("Ingrese la temperatura: ");
+
+            string texto = Console.ReadLine();
+            int temperatura;
+
+            int.TryParse(texto, out temperatura);
+
+            if (temperatura == 0 && texto != "0")
+            {
+                Console.WriteLine();
+                Console.WriteLine("Valor no válido. Solo números.");
+                Pausa();
+                return;
+            }
+
+            if (cantidad < historialtemperatura.Length)
+            {
+                historialtemperatura[cantidad] = temperatura;
+                historialFechas[cantidad] = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                cantidad++;
+            }
+            else
+            {
+                Console.WriteLine("El historial está lleno.");
+                Pausa();
+                return;
+            }
+
+            GestionArchivoTemperaturas.GuardarHistorial(historialtemperatura, historialFechas, cantidad);
+
+            string estado = EvaluarEstado(temperatura);
+
+            Console.WriteLine();
+            Console.WriteLine("Temperatura registrada correctamente.");
+            Console.WriteLine("Valor : " + temperatura + "°C");
+            Console.WriteLine("Estado: " + estado);
+            Console.WriteLine("Fecha : " + historialFechas[cantidad - 1]);
+
+            Pausa();
+        }
 
 
     }
