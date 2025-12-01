@@ -57,6 +57,7 @@ namespace sistemacontraincendios
                 switch (opcion)
                 {
                     case 1:
+                        OperacionesAlarma.RegistrarTemperaturaManual();
                         break;
                     case 2:
                         break;

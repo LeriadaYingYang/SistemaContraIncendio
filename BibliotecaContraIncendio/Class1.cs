@@ -61,7 +61,7 @@ namespace BibliotecaContraIncendios
             if (temperatura == 0 && texto != "0")
             {
                 Console.WriteLine();
-                Console.WriteLine("Valor no válido. Solo números.");
+                Console.WriteLine("Valor no válido, solo números.");
                 Pausa();
                 return;
             }
