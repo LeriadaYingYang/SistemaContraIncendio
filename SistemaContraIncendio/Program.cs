@@ -36,9 +36,8 @@ namespace sistemacontraincendios
                 Console.WriteLine("5. Mostrar historial de temperatura");
                 Console.WriteLine("6. Limpiar historial");
                 Console.WriteLine("7. Configurar índices de advertencia");
-                Console.WriteLine("8. Activar o Desactivar Alarma de Emergencia");
-                Console.WriteLine("9. Buscar temperatura");
-                Console.WriteLine("10. Salir");
+                Console.WriteLine("8. Buscar temperatura");
+                Console.WriteLine("9. Salir");
                 Console.Write("Seleccione una opción: ");
 
                 string texto = Console.ReadLine();
@@ -71,15 +70,12 @@ namespace sistemacontraincendios
                         break;
                     case 9:
                         break;
-                    case 10:
-
-                        break;
                     default:
 
                         break;
                 }
 
-            } while (opcion != 10);
+            } while (opcion != 9);
         }
     }
 
