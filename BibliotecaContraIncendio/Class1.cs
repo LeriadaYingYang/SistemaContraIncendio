@@ -356,7 +356,247 @@ namespace BibliotecaContraIncendios
             Pausa();
         }
 
+        public static void LimpiarHistorial()
+        {
+            Console.Clear();
 
+            if (cantidad == 0)
+            {
+                Console.WriteLine("El historial ya está vacío.");
+                Pausa();
+                return;
+            }
+
+            Console.Write("¿Está seguro de limpiar todo el historial? (si/no): ");
+            string respuesta = Console.ReadLine();
+
+            if (respuesta.ToLower() == "si")
+            {
+                cantidad = 0;
+
+                GestionArchivoTemperaturas.GuardarHistorial(historialtemperatura, historialFechas, cantidad);
+
+                Console.WriteLine();
+                Console.WriteLine("Historial limpiado correctamente.");
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Operación cancelada.");
+            }
+
+            Pausa();
+        }
+
+        public static void ConfigurarIndices()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Límite actual de ALERTA : " + limiteAlerta + "°C");
+            Console.WriteLine("Límite actual de PELIGRO: " + limitePeligro + "°C");
+            Console.WriteLine();
+
+            Console.Write("Ingrese nuevo límite de ALERTA: ");
+            string textoAlerta = Console.ReadLine();
+            int nuevoLimiteAlerta;
+            int.TryParse(textoAlerta, out nuevoLimiteAlerta);
+
+            if (nuevoLimiteAlerta == 0 && textoAlerta != "0")
+            {
+                Console.WriteLine("Valor no válido.");
+                Pausa();
+                return;
+            }
+
+            Console.Write("Ingrese nuevo límite de PELIGRO: ");
+            string textoPeligro = Console.ReadLine();
+            int nuevoLimitePeligro;
+            int.TryParse(textoPeligro, out nuevoLimitePeligro);
+
+            if (nuevoLimitePeligro == 0 && textoPeligro != "0")
+            {
+                Console.WriteLine("Valor no válido.");
+                Pausa();
+                return;
+            }
+
+            limiteAlerta = nuevoLimiteAlerta;
+            limitePeligro = nuevoLimitePeligro;
+
+            GestionLimiteTemperatura.GuardarLimites(limiteAlerta, limitePeligro);
+
+            Console.WriteLine();
+            Console.WriteLine("Índices actualizados y guardados en limites.txt.");
+            Pausa();
+        }
+
+        public static void BuscarTemperatura()
+        {
+            Console.Clear();
+
+            if (cantidad == 0)
+            {
+                Console.WriteLine("No hay temperaturas registradas.");
+                Pausa();
+                return;
+            }
+
+            Console.WriteLine("SE MUESTRA EL HISOTORIAL DE LA BASE DE TEXTO DONDE BUSCA TEMPERATURA");
+            Console.WriteLine("1. Buscar exacta");
+            Console.WriteLine("2. Buscar por rango");
+            Console.WriteLine("3. Buscar por estado");
+            Console.Write("Seleccione una opción: ");
+
+            string textoOpcion = Console.ReadLine();
+            int opcionBusqueda;
+            int.TryParse(textoOpcion, out opcionBusqueda);
+
+            switch (opcionBusqueda)
+            {
+                case 1:
+                    BuscarPorTemperaturaExacta();
+                    break;
+                case 2:
+                    BuscarPorRango();
+                    break;
+                case 3:
+                    BuscarPorEstado();
+                    break;
+                default:
+                    Console.WriteLine("Opción inválida.");
+                    Pausa();
+                    break;
+            }
+        }
+
+        public static void BuscarPorTemperaturaExacta()
+        {
+            Console.Clear();
+            Console.Write("Ingrese la temperatura: ");
+
+            string textoTemperatura = Console.ReadLine();
+            int temperaturaBuscada;
+            int.TryParse(textoTemperatura, out temperaturaBuscada);
+
+            if (temperaturaBuscada == 0 && textoTemperatura != "0")
+            {
+                Console.WriteLine("Valor no válido.");
+                Pausa();
+                return;
+            }
+
+            bool encontrado = false;
+
+            Console.WriteLine();
+            for (int i = 0; i < cantidad; i++)
+            {
+                if (historialtemperatura[i] == temperaturaBuscada)
+                {
+                    Console.WriteLine("Posición " + (i + 1) +": " + historialtemperatura[i] + "°C" +" - " + historialFechas[i]);
+                    encontrado = true;
+                }
+            }
+
+            if (encontrado == false)
+            {
+                Console.WriteLine("No se encontraron temperaturas con ese valor.");
+            }
+
+            Pausa();
+        }
+
+        public static void BuscarPorRango()
+        {
+            Console.Clear();
+            Console.Write("Ingrese límite inferior: ");
+            string textoMinimo = Console.ReadLine();
+            int minimo;
+            int.TryParse(textoMinimo, out minimo);
+
+            if (minimo == 0 && textoMinimo != "0")
+            {
+                Console.WriteLine("Valor no válido.");
+                Pausa();
+                return;
+            }
+
+            Console.Write("Ingrese límite superior: ");
+            string textoMaximo = Console.ReadLine();
+            int maximo;
+            int.TryParse(textoMaximo, out maximo);
+
+            if (maximo == 0 && textoMaximo != "0")
+            {
+                Console.WriteLine("Valor no válido.");
+                Pausa();
+                return;
+            }
+
+            if (maximo < minimo)
+            {
+                Console.WriteLine("Error: el máximo no puede ser menor que el mínimo.");
+                Pausa();
+                return;
+            }
+
+            bool encontrado = false;
+
+            Console.WriteLine();
+            for (int i = 0; i < cantidad; i++)
+            {
+                int temperatura = historialtemperatura[i];
+                if (temperatura >= minimo && temperatura <= maximo)
+                {
+                    Console.WriteLine(
+                        "Posición " + (i + 1) +": " + temperatura + "°C" +" - " + historialFechas[i]);
+                    encontrado = true;
+                }
+            }
+
+            if (encontrado == false)
+            {
+                Console.WriteLine("No hay temperaturas en ese rango.");
+            }
+
+            Pausa();
+        }
+
+        public static void BuscarPorEstado()
+        {
+            Console.Clear();
+            Console.WriteLine("Estados: NORMAL, ALERTA, PELIGRO");
+            Console.Write("Ingrese estado: ");
+
+            string estadoBuscado = Console.ReadLine().ToUpper();
+
+            if (estadoBuscado != "NORMAL" && estadoBuscado != "ALERTA" && estadoBuscado != "PELIGRO")
+            {
+                Console.WriteLine("Estado inválido.");
+                Pausa();
+                return;
+            }
+
+            bool encontrado = false;
+
+            Console.WriteLine();
+            for (int i = 0; i < cantidad; i++)
+            {
+                string estado = EvaluarEstado(historialtemperatura[i]);
+
+                if (estado == estadoBuscado)
+                {
+                    Console.WriteLine("Posición " + (i + 1) +": " + historialtemperatura[i] + "°C" +" - " + historialFechas[i]);
+                    encontrado = true;
+                }
+            }
+
+            if (encontrado == false)
+            {
+                Console.WriteLine("No hay temperaturas con ese estado.");
+            }
+
+            Pausa();
+        }
 
     }
 }
