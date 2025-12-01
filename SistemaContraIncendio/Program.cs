@@ -30,8 +30,9 @@ namespace sistemacontraincendios
                 Console.WriteLine("2. Quiroz Cabanillas Franco Yaren - N00500542");
                 Console.WriteLine("3. Pablo Diaz Tello  - N00483823");
                 Console.WriteLine("4. Pompa Culqui Jhordan Jesús  - N00490707");
+                Console.WriteLine($"La fecha y hora es :{ DateTime.Now.AddHours(0)}");
                 Console.WriteLine("------------------------------------------------");
-
+                Console.WriteLine("-------------MENU DE CONSOLA-------------------");
                 Console.WriteLine("1. Registrar temperatura manual");
                 Console.WriteLine("2. Generar temperatura aleatoria");
                 Console.WriteLine("3. Reemplazar temperatura en posición");
