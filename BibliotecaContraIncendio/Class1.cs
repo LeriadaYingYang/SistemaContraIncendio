@@ -118,6 +118,75 @@ namespace BibliotecaContraIncendios
             Pausa();
         }
 
+        public static void ReemplazarTemperatura()
+        {
+            Console.Clear();
+
+            if (cantidad == 0)
+            {
+                Console.WriteLine("No hay datos en el historial.");
+                Pausa();
+                return;
+            }
+
+            Console.WriteLine("=== HISTORIAL ACTUAL ===");
+            Console.WriteLine();
+
+            for (int i = 0; i < cantidad; i++)
+            {
+                Console.WriteLine(
+                    (i + 1) + ". " +
+                    historialtemperatura[i] + "°C" +
+                    "  -  " + historialFechas[i]
+                );
+            }
+
+            Console.WriteLine();
+            Console.Write("Ingrese la posición que desea reemplazar (1 a " + cantidad + "): ");
+
+            string textoPosicion = Console.ReadLine();
+            int posicion;
+            int.TryParse(textoPosicion, out posicion);
+
+            if (posicion <= 0 || posicion > cantidad)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Posición inválida.");
+                Pausa();
+                return;
+            }
+
+            Console.Write("Ingrese la nueva temperatura: ");
+
+            string textoTemperatura = Console.ReadLine();
+            int nuevaTemperatura;
+            int.TryParse(textoTemperatura, out nuevaTemperatura);
+
+            if (nuevaTemperatura == 0 && textoTemperatura != "0")
+            {
+                Console.WriteLine();
+                Console.WriteLine("Valor no válido.");
+                Pausa();
+                return;
+            }
+
+            int indice = posicion - 1;
+            historialtemperatura[indice] = nuevaTemperatura;
+            historialFechas[indice] = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+
+            GestionArchivoTemperaturas.GuardarHistorial(historialtemperatura, historialFechas, cantidad);
+
+            string estado = EvaluarEstado(nuevaTemperatura);
+
+            Console.WriteLine();
+            Console.WriteLine("Temperatura reemplazada correctamente.");
+            Console.WriteLine("Nueva temperatura: " + nuevaTemperatura + "°C");
+            Console.WriteLine("Estado          : " + estado);
+            Console.WriteLine("Fecha           : " + historialFechas[indice]);
+
+            Pausa();
+        }
+
 
 
 
