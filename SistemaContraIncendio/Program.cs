@@ -24,6 +24,7 @@ namespace sistemacontraincendios
                 Console.WriteLine("  SISTEMA DE CONSOLA DE ALARMA CONTRA INCENDIOS ");
                 Console.WriteLine("-----------------INTEGRANTES--------------------");
                 Console.WriteLine("1. Daniel Enrique Jara Alva - N00243181");
+                Console.WriteLine("2. Quiroz Cabanillas Franco Yaren - N00500542");
                 Console.WriteLine("------------------------------------------------");
 
                 Console.WriteLine("1. Registrar temperatura manual");
