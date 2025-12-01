@@ -66,8 +66,10 @@ namespace sistemacontraincendios
                         OperacionesAlarma.ReemplazarTemperatura();
                         break;
                     case 4:
+                        OperacionesAlarma.EliminarTemperatura();
                         break;
                     case 5:
+                        OperacionesAlarma.MostrarHistorial();
                         break;
                     case 6:
                         break;
