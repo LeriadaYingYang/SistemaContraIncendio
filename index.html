@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Control de Alarma Contra Incendios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header>
+    <h1>Grupo 5 - Panel de Alarma Del Sistema Contra Incendios</h1>
+
+</header>
+
+<section class="integrantes-box">
+    <h2>Integrantes del Grupo</h2>
+    <ul class="lista-integrantes">
+        <li>Daniel Enrique Jara Alva - N00243181 </li>
+        <li>Quiroz Cabanillas Franco Yaren - N00500542</li>
+        <li>Diaz Tello Pablo - N00483823</li>
+        <li>Pompa Culqui Jhordan Jesús - N00490707</li>
+    </ul>
+</section>
+
+<div class="contenedor">
+
+    <div class="fila">
+
+        <div class="tarjeta pequena">
+            <div class="titulo">Estado de la alarma</div>
+            <div id="estadoAlarma" class="valor">Cargando</div>
+            <div id="chipAlarma" class="etiqueta normal">---</div>
+        </div>
+
+        <div class="tarjeta pequena">
+            <div class="titulo">Última temperatura</div>
+            <div id="ultimaTemp" class="valor">---°C</div>
+            <div id="estadoTemp" class="etiqueta normal">---</div>
+            <p id="ultimaFecha" class="texto-secundario">Fecha y hora: ---</p>
+        </div>
+
+        <div class="tarjeta pequena">
+            <div class="titulo">Límites configurados</div>
+            <p id="textoLimites" class="texto-secundario">
+                Alerta: cargando<br>
+                Peligro: cargando
+            </p>
+        </div>
+
+    </div>
+
+    <div class="fila" style="margin-top:10px;">
+        <div class="tarjeta grande">
+            <div class="titulo">Historial de Alarma de temperaturas</div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Temperatura</th>
+                    <th>Estado</th>
+                    <th>Fecha y hora</th>
+                </tr>
+                </thead>
+                <tbody id="tablaHistorial">
+                <tr>
+                    <td colspan="4" style="text-align:center;">Cargando</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="pie">
+        Este Sistema de Alarma esta hecho en – C# + TXT + HTML + CSS + JS + VPS
+    </div>
+
+</div>
+
+<div id="modalSonido" class="modal-sonido">
+    <div class="modal-contenido">
+        <h2>Activar sonido de alarma</h2>
+        <p>¿Deseas activar el sonido cuando el sistema entre en estado de PELIGRO?</p>
+        <div class="modal-botones">
+            <button id="btnSonidoSi">Sí, activar sonido</button>
+            <button id="btnSonidoNo">No, sin sonido</button>
+        </div>
+    </div>
+</div>
+
+<audio id="sonidoAlarma" src="alarma.mp3" preload="auto" loop></audio>
+<script src="script.js"></script>
+</body>
+</html>
