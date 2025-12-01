@@ -72,14 +72,22 @@ namespace sistemacontraincendios
                         OperacionesAlarma.MostrarHistorial();
                         break;
                     case 6:
+                        OperacionesAlarma.LimpiarHistorial();
                         break;
                     case 7:
+                        OperacionesAlarma.ConfigurarIndices();
                         break;
                     case 8:
+                        OperacionesAlarma.BuscarTemperatura();
                         break;
                     case 9:
+                        Console.WriteLine("Saliendo del sistema de consola");
+                        OperacionesAlarma.Pausa();
                         break;
                     default:
+                        Console.WriteLine();
+                        Console.WriteLine("Selecciono una opción fuera de rango. Intente nuevamente.");
+                        OperacionesAlarma.Pausa();
 
                         break;
                 }
