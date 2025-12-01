@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BibliotecaContraIncendios;
 
 namespace sistemacontraincendios
 {
@@ -11,6 +12,8 @@ namespace sistemacontraincendios
     {
         static void Main(string[] args)
         {
+            OperacionesAlarma.CargarHistorialDesdeArchivo();
+            OperacionesAlarma.CargarLimitesDesdeArchivo();
             MenuPrincipal();
         }
 
@@ -47,6 +50,7 @@ namespace sistemacontraincendios
                 {
                     Console.WriteLine();
                     Console.WriteLine("Opción no válida. Debe ingresar un número.");
+                    OperacionesAlarma.Pausa();
                     continue;
                 }
 
