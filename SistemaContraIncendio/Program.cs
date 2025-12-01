@@ -63,6 +63,7 @@ namespace sistemacontraincendios
                         OperacionesAlarma.GenerarTemperaturaAleatoria();
                         break;
                     case 3:
+                        OperacionesAlarma.ReemplazarTemperatura();
                         break;
                     case 4:
                         break;
