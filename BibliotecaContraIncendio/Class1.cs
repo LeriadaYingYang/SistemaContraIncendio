@@ -16,9 +16,9 @@ namespace BibliotecaContraIncendios
 
         public static int limiteAlerta = 47;
         public static int limitePeligro = 80;
-    
 
-    public static void Pausa()
+
+        public static void Pausa()
         {
             Console.WriteLine();
             Console.WriteLine("Presione ENTER para continuar...");
@@ -92,9 +92,35 @@ namespace BibliotecaContraIncendios
             Pausa();
         }
 
+        public static void GenerarTemperaturaAleatoria()
+        {
+            Console.Clear();
+
+            Random rnd = new Random();
+            int temperatura = rnd.Next(10, 200);
+
+            if (cantidad < historialtemperatura.Length)
+            {
+                historialtemperatura[cantidad] = temperatura;
+                historialFechas[cantidad] = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                cantidad++;
+            }
+
+            GestionArchivoTemperaturas.GuardarHistorial(historialtemperatura, historialFechas, cantidad);
+
+            string estado = EvaluarEstado(temperatura);
+
+            Console.WriteLine("Temperatura generada automáticamente:");
+            Console.WriteLine("Valor : " + temperatura + "°C");
+            Console.WriteLine("Estado: " + estado);
+            Console.WriteLine("Fecha : " + historialFechas[cantidad - 1]);
+
+            Pausa();
+        }
+
+
+
 
     }
-
-
 }
 
